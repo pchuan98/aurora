@@ -9,7 +9,7 @@ spec:
     website: https://github.com/pchuan98
   description: fork from https://github.com/Roozenlz/halo-theme-aurora
   logo: https://roozen.top/upload/ObsidianestLogo-hex_hecqbw.png
-  website: https://roozen.top/?preview-theme=theme-aurora
+  website: https://blog.pchuan.live
   repo: https://github.com/pchuan98/halo-theme-aurora
   settingName: "theme-aurora-setting"
   configMapName: "theme-aurora-configMap"
