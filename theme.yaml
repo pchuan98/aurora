@@ -8,7 +8,7 @@ spec:
     name: chuan
     website: https://github.com/pchuan98
   description: fork from https://github.com/Roozenlz/halo-theme-aurora
-  logo: https://roozen.top/upload/ObsidianestLogo-hex_hecqbw.png
+  logo: 
   website: https://blog.pchuan.live
   repo: https://github.com/pchuan98/aurora
   settingName: "aurora-setting"
