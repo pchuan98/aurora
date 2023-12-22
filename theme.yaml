@@ -1,0 +1,17 @@
+apiVersion: theme.halo.run/v1alpha1
+kind: Theme
+metadata:
+  name: theme-aurora
+spec:
+  displayName: Aurora
+  author:
+    name: chuan
+    website: https://github.com/pchuan98
+  description: fork from https://github.com/Roozenlz/halo-theme-aurora
+  logo: https://roozen.top/upload/ObsidianestLogo-hex_hecqbw.png
+  website: https://roozen.top/?preview-theme=theme-aurora
+  repo: https://github.com/pchuan98/halo-theme-aurora
+  settingName: "theme-aurora-setting"
+  configMapName: "theme-aurora-configMap"
+  version: "1.0.3"
+  require: ">=2.8.0"

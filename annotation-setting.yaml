@@ -1,0 +1,42 @@
+apiVersion: v1alpha1
+kind: AnnotationSetting
+metadata:
+  generateName: annotation-setting-
+spec:
+  targetRef:
+    group: "core.halo.run"
+    kind: LinkGroup
+  formSchema:
+    - $formkit: "radio"
+      name: "displayStyle"
+      label: "分组方式"
+      value: default
+      options:
+        - label: 默认
+          value: default
+        - label: 美化
+          value: beautify
+    - $formkit: "textarea"
+      name: "description"
+      label: "描述"
+---
+apiVersion: v1alpha1
+kind: AnnotationSetting
+metadata:
+  generateName: annotation-setting-
+spec:
+  targetRef:
+    group: "core.halo.run"
+    kind: Link
+  formSchema:
+    - $formkit: "attachment"
+      name: "siteshot"
+      label: "背景"
+    - $formkit: "text"
+      name: "label"
+      label: "标签"
+    - $formkit: "color"
+      name: "labelColor"
+      value: "#425AEF"
+      label: "标签颜色"
+---

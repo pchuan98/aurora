@@ -1,0 +1,605 @@
+apiVersion: v1alpha1
+kind: Setting
+metadata:
+  name: theme-aurora-setting
+spec:
+  forms:
+    - group: basics
+      label: 基础
+      formSchema:
+        - $formkit: date
+          name: siteStartTime
+          label: 建站时间
+          validation: required
+          value: "2023-08-13"
+          help: 注意，此项为必填项
+        - $formkit: text
+          name: icp
+          label: ICP 备案
+          placeholder: 请输入 ICP 备案号
+          help: 格式：皖ICP备 xxxxxxxx 号
+        - $formkit: text
+          name: gongan
+          label: 公安备案
+          placeholder: 请输入公安备案号
+          help: 格式：皖公网安备 xxxxxxxx 号
+    - group: top
+      label: 顶部
+      formSchema:
+        - $formkit: attachment
+          name: default_img
+          value: /themes/theme-aurora/assets/img/default-cover.jpg
+          label: 默认背景图
+          placeholder: 请填写背景图地址
+          help: 下方选项为空时的默认图，可填写随机图地址，默认为 /themes/theme-aurora/assets/img/default-cover.jpg ，文章及自定义页面的背景图与其封面图一致
+        - $formkit: attachment
+          name: index_img
+          label: 首页顶部背景图
+          placeholder: 请填写背景图地址
+        - $formkit: attachment
+          name: archives_img
+          label: 文章归档页顶部背景图
+          placeholder: 请填写背景图地址
+        - $formkit: attachment
+          name: links_img
+          label: 友链顶部背景图
+          placeholder: 请填写背景图地址
+        - $formkit: attachment
+          name: tag_img
+          label: 标签页顶部背景图
+          placeholder: 请填写背景图地址
+        - $formkit: attachment
+          name: category_img
+          label: 分类页顶部背景图
+          placeholder: 请填写背景图地址
+        - $formkit: attachment
+          name: moments_img
+          label: 瞬间页顶部背景图
+          placeholder: 请填写背景图地址
+        - $formkit: attachment
+          name: bangumis_img
+          label: 追番页顶部背景图
+          placeholder: 请填写背景图地址
+    - group: index
+      label: 首页
+      formSchema:
+        - $formkit: radio
+          name: enable_pin
+          label: 置顶文章
+          key: enable_pin
+          id: enable_pin
+          options:
+            - label: 显示
+              value: true
+            - label: 隐藏
+              value: false
+        - $formkit: postSelect
+          if: $get(enable_pin).value
+          name: pin_post
+          label: 首页置顶文章
+          value: ""
+        - $formkit: radio
+          name: enable_feature
+          label: 推荐文章
+          key: enable_feature
+          id: enable_feature
+          options:
+            - label: 显示
+              value: true
+            - label: 隐藏
+              value: false
+        - $formkit: postSelect
+          if: $get(enable_feature).value
+          name: feature_post1
+          label: 首页推荐文章1
+          value: ""
+        - $formkit: postSelect
+          if: $get(enable_feature).value
+          name: feature_post2
+          label: 首页推荐文章2
+          value: ""
+    - group: article
+      label: 文章
+      formSchema:
+        - $formkit: attachment
+          name: default_img
+          value: /themes/theme-aurora/assets/img/default-cover.jpg
+          label: 默认封面图
+          placeholder: 请填写封面图地址
+          help: 文章封面图为空时的默认图，可填写随机图地址，默认为 /themes/theme-aurora/assets/img/default-cover.jpg ，文章及自定义页面的背景图与其封面图一致
+        - $formkit: number
+          name: index_number
+          label: 首页文章列表每列显示数量
+          value: 3
+          validation: "min:1|max:4"
+          min: 1
+          max: 4
+        - $formkit: number
+          name: tag_number
+          label: 标签页文章列表每列显示数量
+          value: 1
+          validation: "min:1|max:4"
+          min: 1
+          max: 4
+        - $formkit: number
+          name: category_number
+          label: 分类页文章列表每列显示数量
+          value: 1
+          validation: "min:1|max:4"
+          min: 1
+          max: 4
+    - group: nav
+      label: 导航
+      formSchema:
+        - $formkit: menuRadio
+          name: menu
+          label: 菜单栏
+          help: 默认只有主菜单，可前往【外观】—>【菜单】新建菜单组，最多支持二级菜单
+          value: ""
+        - $formkit: menuRadio
+          name: appMenu
+          label: 移动端菜单栏
+          help: 建议只有一级菜单
+          value: ""
+    - group: sidebar
+      label: 侧栏
+      formSchema:
+        - $formkit: group
+          name: widgets
+          label: 侧边栏内容
+          help: 目前提供的小部件有：profile（站点资料）, comments（最新评论）, tags（文章标签）。你可以随意组合或排序，以逗号隔开。
+          value:
+            indexWidgets: profile,tags,comments
+            postWidgets: profile,toc
+            tagWidgets: profile,tags,comments
+            categoryWidgets: profile,tags,comments
+            pageWidgets: profile,tags,comments
+          children:
+            - $formkit: textarea
+              name: indexWidgets
+              label: 首页
+#            - $formkit: textarea
+#              name: postWidgets
+#              label: 文章页
+#              help: post 可以支持设置 toc
+            - $formkit: textarea
+              name: tagWidgets
+              label: 标签页
+            - $formkit: textarea
+              name: categoryWidgets
+              label: 分类页
+            - $formkit: textarea
+              name: pageWidgets
+              label: 自定义页
+        - $formkit: group
+          name: profile
+          label: 个人卡片
+          value:
+            profileName:
+            profileDesc: 这就是我
+          children:
+            - $formkit: text
+              name: profileName
+              label: 卡片名称
+              placeholder: 请填写个人卡片名称
+              help: 不填写默认为站点名称
+            - $formkit: textarea
+              name: profileDesc
+              label: 描述信息
+              placeholder: 请填写个人卡片描述信息
+              help: 支持 HTML 语法
+            - $formkit: repeater
+              name: socialMedia
+              label: 社交媒体
+              help: 此处社交媒体最多设置12个
+              max: 12
+              value: [ ]
+              children:
+                - $formkit: select
+                  name: icon
+                  label: 图标
+                  options:
+                    - label: 电子邮箱
+                      value: roozen-envelope
+                    - label: 微信
+                      value: roozen-weixin
+                    - label: 公众号
+                      value: roozen-weixingongzhonghao
+                    - label: 腾讯 QQ
+                      value: roozen-qq
+                    - label: 新浪微博
+                      value: roozen-weibo
+                    - label: 知乎
+                      value: roozen-zhihu
+                    - label: 豆瓣
+                      value: roozen-douban
+                    - label: 哔哩哔哩
+                      value: roozen-bilibili
+                    - label: GitHub
+                      value: roozen-github
+                    - label: GitLab
+                      value: roozen-Gitlab-fill
+                    - label: 百度
+                      value: roozen-baidu
+                    - label: 语雀
+                      value: roozen-yuque-fill
+                    - label: CSDN
+                      value: roozen-csdn
+                    - label: LeetCode
+                      value: roozen-leetcode
+                    - label: 抖音 / TikTok
+                      value: roozen-tiktok
+                    - label: Telegram
+                      value: roozen-telegram
+                    - label: Facebook
+                      value: roozen-facebook-fill
+                    - label: Instagram
+                      value: roozen-instagram1
+                    - label: LinkedIn
+                      value: roozen-linkedin
+                    - label: Twitter
+                      value: roozen-tuite
+                    - label: Slack
+                      value: roozen-slack
+                    - label: Discord
+                      value: roozen-discord
+                    - label: Steam
+                      value: roozen-steam
+                - $formkit: text
+                  name: name
+                  label: 名称
+                - $formkit: url
+                  name: url
+                  label: 链接
+        - $formkit: number
+          name: newcommentnumber
+          label: 最新评论
+          value: 5
+          help: 最新评论数量, 小于 0 则展示5条评论
+    - group: link
+      label: 友链
+      formSchema:
+        - $formkit: radio
+          name: linksCanvas
+          label: 互动友链
+          value: false
+          options:
+            - label: 打开
+              value: true
+            - label: 关闭
+              value: false
+        - $formkit: text
+          name: contact
+          label: 免责声明联系邮箱
+          value: xxx@example.com
+        - $formkit: textarea
+          name: applicationFormat
+          label: 友链申请格式
+          placeholder: 请给出你的友链信息
+          help: 支持 HTML 语法
+    - group: comments
+      label: 评论
+      formSchema:
+        - $formkit: select
+          name: use
+          label: 请选择评论系统
+          id: use
+          key: use
+          value: commentWidget
+          help: Twikoo评论需要填写下方配置
+          options:
+            - label: 默认
+              value: commentWidget
+            - label: Twikoo
+              value: Twikoo
+        - $formkit: radio
+          if: $get(use).value == 'Twikoo'
+          name: twikooEnable
+          id: twikooEnable
+          key: twikooEnable
+          label: Twikoo
+          value: true
+          options:
+            - label: 打开
+              value: true
+            - label: 关闭
+              value: false
+        - $formkit: group
+          if: $get(twikooEnable).value
+          name: twikoos
+          label: Twikoo评论配置
+          value:
+            maxBarrage:
+            barrageTime:
+            envId:
+            accessToken:
+            mailMd5:
+          children:
+            - $formkit: url
+              name: envId
+              label: Twikoo评论 - 环境id/后端URL
+              placeholder: 请输入环境id或URL
+              help: 详情请查看文档
+            - $formkit: text
+              name: accessToken
+              label: Twikoo评论 - 管理员令牌
+              placeholder: 请输入token
+              help: 在浏览器F12的控制台中获取，用于显示弹幕，详情请查看文档
+            - $formkit: text
+              name: mailMd5
+              label: Twikoo评论 - 博主邮箱MD5值
+              placeholder: 请输入md5值
+              help: 用于验证博主评论，可前往cmd5.com加密自己使用的邮箱，选择32位小写
+    - group: code
+      label: 代码块
+      formSchema:
+        - $formkit: radio
+          name: enable
+          id: enable
+          key: enable
+          label: 启用代码块
+          help: 如果安装代码块插件，可关闭此功能
+          value: false
+          options:
+            - label: 启用
+              value: true
+            - label: 禁用
+              value: false
+        - $formkit: radio
+          name: enable_title
+          if: $get(enable).value
+          label: 启用代码标题
+          help: 启用代码块的标题，默认显示语言类型，也可自定义标题
+          value: true
+          options:
+            - label: 启用
+              value: true
+            - label: 禁用
+              value: false
+        - $formkit: radio
+          name: enable_hr
+          if: $get(enable).value
+          label: 启用代码标题分割线
+          help: 启用代码标题和内容之间的分割线，不展示时会更加简洁
+          value: true
+          options:
+            - label: 启用
+              value: true
+            - label: 禁用
+              value: false
+        - $formkit: radio
+          name: enable_line
+          if: $get(enable).value
+          label: 启用代码行号
+          help: 启用代码块行号功能
+          value: true
+          options:
+            - label: 启用
+              value: true
+            - label: 禁用
+              value: false
+        - $formkit: radio
+          name: enable_copy
+          if: $get(enable).value
+          label: 启用代码复制
+          help: 启用代码块复制按钮
+          value: true
+          options:
+            - label: 启用
+              value: true
+            - label: 禁用
+              value: false
+        - $formkit: radio
+          name: enable_expander
+          if: $get(enable).value
+          label: 启用代码折叠
+          help: 启用代码折叠功能
+          value: true
+          options:
+            - label: 启用
+              value: true
+            - label: 禁用
+              value: false
+        - $formkit: radio
+          name: enable_height_limit
+          id: enable_height_limit
+          key: enable_height_limit
+          if: $get(enable).value
+          label: 启用代码高度限制
+          help: 启用代码高度限制功能
+          value: false
+          options:
+            - label: 启用
+              value: true
+            - label: 禁用
+              value: false
+        - $formkit: number
+          name: height_limit
+          if: $get(enable_height_limit).value
+          value: 300
+          label: 代码高度限制
+        - $formkit: select
+          name: theme_light
+          if: $get(enable).value
+          label: 代码块主题（浅色）随着系统主题变化
+          value: one-light
+          options:
+            - value: "one-dark"
+              label: "one-dark"
+            - value: "one-light"
+              label: "one-light"
+            - value: "a11y-dark"
+              label: "a11y-dark"
+            - value: "atom-dark"
+              label: "atom-dark"
+            - value: "base16-ateliersulphurpool.light"
+              label: "base16-ateliersulphurpool.light"
+            - value: "cb"
+              label: "cb"
+            - value: "coldark-cold"
+              label: "coldark-cold"
+            - value: "coldark-dark"
+              label: "coldark-dark"
+            - value: "coy-without-shadows"
+              label: "coy-without-shadows"
+            - value: "darcula"
+              label: "darcula"
+            - value: "dracula"
+              label: "dracula"
+            - value: "duotone-dark"
+              label: "duotone-dark"
+            - value: "duotone-earth"
+              label: "duotone-earth"
+            - value: "duotone-forest"
+              label: "duotone-forest"
+            - value: "duotone-light"
+              label: "duotone-light"
+            - value: "duotone-sea"
+              label: "duotone-sea"
+            - value: "duotone-space"
+              label: "duotone-space"
+            - value: "ghcolors"
+              label: "ghcolors"
+            - value: "gruvbox-dark"
+              label: "gruvbox-dark"
+            - value: "gruvbox-light"
+              label: "gruvbox-light"
+            - value: "holi-theme"
+              label: "holi-theme"
+            - value: "hopscotch"
+              label: "hopscotch"
+            - value: "lucario"
+              label: "lucario"
+            - value: "material-dark"
+              label: "material-dark"
+            - value: "material-light"
+              label: "material-light"
+            - value: "material-oceanic"
+              label: "material-oceanic"
+            - value: "night-owl"
+              label: "night-owl"
+            - value: "nord"
+              label: "nord"
+            - value: "pojoaque"
+              label: "pojoaque"
+            - value: "shades-of-purple"
+              label: "shades-of-purple"
+            - value: "solarized-dark-atom"
+              label: "solarized-dark-atom"
+            - value: "synthwave84"
+              label: "synthwave84"
+            - value: "vs"
+              label: "vs"
+            - value: "vsc-dark-plus"
+              label: "vsc-dark-plus"
+            - value: "xonokai"
+              label: "xonokai"
+            - value: "z-touch"
+              label: "z-touch"
+        - $formkit: select
+          name: theme_dark
+          if: $get(enable).value
+          label: 代码块主题（深色）随着系统主题变化
+          value: one-dark
+          options:
+            - value: "one-dark"
+              label: "one-dark"
+            - value: "one-light"
+              label: "one-light"
+            - value: "a11y-dark"
+              label: "a11y-dark"
+            - value: "atom-dark"
+              label: "atom-dark"
+            - value: "base16-ateliersulphurpool.light"
+              label: "base16-ateliersulphurpool.light"
+            - value: "cb"
+              label: "cb"
+            - value: "coldark-cold"
+              label: "coldark-cold"
+            - value: "coldark-dark"
+              label: "coldark-dark"
+            - value: "coy-without-shadows"
+              label: "coy-without-shadows"
+            - value: "darcula"
+              label: "darcula"
+            - value: "dracula"
+              label: "dracula"
+            - value: "duotone-dark"
+              label: "duotone-dark"
+            - value: "duotone-earth"
+              label: "duotone-earth"
+            - value: "duotone-forest"
+              label: "duotone-forest"
+            - value: "duotone-light"
+              label: "duotone-light"
+            - value: "duotone-sea"
+              label: "duotone-sea"
+            - value: "duotone-space"
+              label: "duotone-space"
+            - value: "ghcolors"
+              label: "ghcolors"
+            - value: "gruvbox-dark"
+              label: "gruvbox-dark"
+            - value: "gruvbox-light"
+              label: "gruvbox-light"
+            - value: "holi-theme"
+              label: "holi-theme"
+            - value: "hopscotch"
+              label: "hopscotch"
+            - value: "lucario"
+              label: "lucario"
+            - value: "material-dark"
+              label: "material-dark"
+            - value: "material-light"
+              label: "material-light"
+            - value: "material-oceanic"
+              label: "material-oceanic"
+            - value: "night-owl"
+              label: "night-owl"
+            - value: "nord"
+              label: "nord"
+            - value: "pojoaque"
+              label: "pojoaque"
+            - value: "shades-of-purple"
+              label: "shades-of-purple"
+            - value: "solarized-dark-atom"
+              label: "solarized-dark-atom"
+            - value: "synthwave84"
+              label: "synthwave84"
+            - value: "vs"
+              label: "vs"
+            - value: "vsc-dark-plus"
+              label: "vsc-dark-plus"
+            - value: "xonokai"
+              label: "xonokai"
+            - value: "z-touch"
+              label: "z-touch"
+    - group: title
+      label: 标题
+      formSchema:
+        - $formkit: text
+          name: moments_title
+          label: 瞬间页面顶部文字
+          help: 需要安装瞬间插件，然后访问 /moments
+          value: 我的动态
+    - group: other
+      label: 其他设置
+      formSchema:
+        - $formkit: group
+          name: error_404
+          label: 404 页面
+          value:
+            subtitle: 看起来您要查找的页面不再在这里。
+          children:
+            - $formkit: text
+              name: subtitle
+              label: 标题
+        - $formkit: group
+          name: error_500
+          label: 500 页面
+          value:
+            subtitle: 服务器内部出现错误，请查看日志
+          children:
+            - $formkit: text
+              name: subtitle
+              label: 标题
