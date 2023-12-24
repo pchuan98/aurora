@@ -13,5 +13,5 @@ spec:
   repo: https://github.com/pchuan98/aurora
   settingName: "aurora-setting"
   configMapName: "aurora-configMap"
-  version: "1.0.1"
+  version: "1.0.2"
   require: ">=2.8.0"
