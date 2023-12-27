@@ -13,5 +13,13 @@ spec:
   repo: https://github.com/pchuan98/aurora
   settingName: "aurora-setting"
   configMapName: "aurora-configMap"
-  version: "1.0.2"
+  version: "1.0.4"
   require: ">=2.8.0"
+
+  # 自定义模板设置
+  customTemplates:
+    post:
+      - name: pure
+        description: 纯粹的网站
+        screenshot:
+        file: pure.html
